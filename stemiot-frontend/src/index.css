@@ -1,0 +1,55 @@
+:root {
+  /* Core Colors */
+  --tech-blue: #0A84FF;
+  --electric-purple: #BF5AF2;
+  --dark-bg: #0F172A;
+  --card-bg: #1E293B;
+  
+  /* Text & Accents */
+  --text-main: #F8FAFC;
+  --text-muted: #94A3B8;
+  --white: #ffffff;
+
+  /* Layout Constants */
+  --transition: all 0.3s ease;
+  --border-radius: 12px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--dark-bg);
+  color: var(--text-main);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Reusable Button Style */
+.btn-primary {
+  background: linear-gradient(135deg, var(--tech-blue), var(--electric-purple));
+  color: var(--white);
+  padding: 0.8rem 1.8rem;
+  border-radius: var(--border-radius);
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(191, 90, 242, 0.3);
+}

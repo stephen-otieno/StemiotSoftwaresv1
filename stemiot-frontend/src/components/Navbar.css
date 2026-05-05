@@ -1,0 +1,77 @@
+.navbar {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  background-color: rgba(15, 23, 42, 0.95);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.nav-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Space between image and text */
+  text-decoration: none;
+}
+
+.nav-logo {
+  height: 60px; /* Slightly larger to match two lines of text */
+  width: auto;
+  display: block;
+  transition: var(--transition);
+  border-radius: 50px;
+  object-fit: contain;
+}
+
+.nav-logo:hover {
+  transform: scale(1.05);
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1; /* Keeps the two lines close together */
+}
+
+.brand-name {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.brand-sub {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--tech-blue); /* The "Softwares" part in blue */
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--text-muted);
+  font-weight: 500;
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+.nav-links a:hover {
+  color: var(--electric-purple);
+}
