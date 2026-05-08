@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt, faUser, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import './Blog.css';
 
+const API_BASE_URL = process.env.REACT_APP_API_URL;
+
 const Blog = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,8 +13,8 @@ const Blog = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        // Ensure your backend is running on Port 5000
-        const response = await axios.get('http://localhost:5000/api/blogs');
+        // Use the dynamic URL instead of localhost
+        const response = await axios.get(`${API_BASE_URL}/blogs`);
         console.log("Blogs Fetched:", response.data);
         setPosts(response.data);
         setLoading(false);
@@ -25,7 +27,7 @@ const Blog = () => {
     fetchBlogs();
   }, []);
 
-  if (loading) return <div className="container" style={{padding: '100px', textAlign: 'center'}}><h3>Loading Insights...</h3></div>;
+  if (loading) return <div className="container" style={{ padding: '100px', textAlign: 'center' }}><h3>Loading Insights...</h3></div>;
 
   return (
     <div className="blog-page container">
@@ -35,7 +37,7 @@ const Blog = () => {
       </header>
 
       {posts.length === 0 ? (
-        <div style={{textAlign: 'center', color: 'var(--text-muted)'}}>
+        <div style={{ textAlign: 'center', color: 'var(--text-muted)' }}>
           <p>No blogs found. Please check your database connection or run the seeder.</p>
         </div>
       ) : (
