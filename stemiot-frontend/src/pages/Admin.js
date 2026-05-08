@@ -2,6 +2,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './Admin.css';
 
+// 1. Get the base URL from .env
+const API_BASE_URL = process.env.REACT_APP_API_URL;
+
+// 2. Create the custom axios instance
+const API = axios.create({
+  baseURL: API_BASE_URL
+});
+
 const Admin = () => {
   const [blogData, setBlogData] = useState({ title: '', excerpt: '', content: '', category: '', image: '' });
   const [projectData, setProjectData] = useState({ name: '', description: '', link: '', image: '' });
@@ -10,10 +18,13 @@ const Admin = () => {
   const handleBlogSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/blogs', blogData);
+      // 3. Use the 'API' instance instead of 'axios'
+      // This automatically uses the URL from your .env
+      await API.post('/blogs', blogData); 
       setMessage('Blog posted successfully!');
       setBlogData({ title: '', excerpt: '', content: '', category: '', image: '' });
     } catch (err) {
+      console.error(err);
       setMessage('Error posting blog.');
     }
   };
@@ -21,10 +32,12 @@ const Admin = () => {
   const handleProjectSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/projects', projectData);
+      // 4. Use the 'API' instance here as well
+      await API.post('/projects', projectData);
       setMessage('Project added successfully!');
       setProjectData({ name: '', description: '', link: '', image: '' });
     } catch (err) {
+      console.error(err);
       setMessage('Error adding project.');
     }
   };
@@ -35,7 +48,7 @@ const Admin = () => {
       {message && <p className="status-message">{message}</p>}
 
       <div className="admin-grid">
-        {/* Blog Form */}
+        {/* Forms remain the same... */}
         <section className="admin-section">
           <h2>Upload New Blog</h2>
           <form onSubmit={handleBlogSubmit}>
@@ -48,7 +61,6 @@ const Admin = () => {
           </form>
         </section>
 
-        {/* Project Form */}
         <section className="admin-section">
           <h2>Add New Project</h2>
           <form onSubmit={handleProjectSubmit}>

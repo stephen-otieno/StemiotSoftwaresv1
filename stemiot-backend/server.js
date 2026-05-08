@@ -19,7 +19,9 @@ app.use(express.json());
 // API Routes
 app.use('/api/blogs', blogRoutes);
 app.use('/api/projects', require('./routes/projectRoutes'));
-
+app.use(cors({
+  origin: ["http://localhost:3000", "https://stemiot-frontend.vercel.app/"] 
+}));
 // Basic Test Route
 app.get('/', (req, res) => {
   res.send('Stemiot Softwares API is running...');
