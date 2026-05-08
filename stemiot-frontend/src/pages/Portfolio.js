@@ -3,6 +3,7 @@ import axios from 'axios';
 import ProjectCard from '../components/ProjectCard';
 import './Portfolio.css';
 
+const API_BASE_URL = process.env.REACT_APP_API_URL;
 const Portfolio = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -10,8 +11,9 @@ const Portfolio = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        // Fetching from the endpoint we created in the backend
-        const response = await axios.get('http://localhost:5000/api/projects');
+        // Use the dynamic URL from .env
+        const response = await axios.get(`${API_BASE_URL}/projects`);
+        console.log("Projects found:", response.data);
         setProjects(response.data);
         setLoading(false);
       } catch (error) {
@@ -37,7 +39,7 @@ const Portfolio = () => {
         <h1>Our <span>Showcase</span></h1>
         <p>A glimpse into the innovative solutions built by Stemiot Softwares.</p>
       </div>
-      
+
       {projects.length === 0 ? (
         <div style={{ textAlign: 'center', color: 'var(--text-muted)' }}>
           <p>No projects found. Use the seeder to populate the portfolio.</p>
@@ -45,7 +47,7 @@ const Portfolio = () => {
       ) : (
         <div className="portfolio-grid">
           {projects.map((proj) => (
-            <ProjectCard 
+            <ProjectCard
               key={proj._id} // Using MongoDB's unique ID
               image={proj.image}
               name={proj.name}
