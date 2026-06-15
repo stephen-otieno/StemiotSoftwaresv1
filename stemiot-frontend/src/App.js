@@ -12,6 +12,7 @@ import Portfolio from './pages/Portfolio';
 import Blog from './pages/Blog';
 import Pricing from './pages/Pricing';
 import Contact from './pages/Contact';
+import Auth from './pages/Auth';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Auth />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>
       </main>

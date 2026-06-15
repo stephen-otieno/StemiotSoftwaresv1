@@ -12,16 +12,18 @@ connectDB();
 
 const app = express();
 
-// Middleware
-app.use(cors());
+// Middleware SETUP (Must be completely declared BEFORE any route maps)
+app.use(cors({
+  origin: ["http://localhost:3000", "https://stemiot-frontend.vercel.app"], 
+  credentials: true
+}));
 app.use(express.json());
 
 // API Routes
 app.use('/api/blogs', blogRoutes);
 app.use('/api/projects', require('./routes/projectRoutes'));
-app.use(cors({
-  origin: ["http://localhost:3000", "https://stemiot-frontend.vercel.app/"] 
-}));
+app.use('/api/auth', require('./routes/authRoutes')); // Linked smoothly now
+
 // Basic Test Route
 app.get('/', (req, res) => {
   res.send('Stemiot Softwares API is running...');
