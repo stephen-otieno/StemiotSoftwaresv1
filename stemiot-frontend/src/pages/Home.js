@@ -6,7 +6,9 @@ import {
   faCode, 
   faMobileAlt, 
   faDatabase, 
-  faCreditCard 
+  faCreditCard,
+  faExternalLinkAlt,
+  faArrowRight
 } from '@fortawesome/free-solid-svg-icons';
 import './Home.css';
 
@@ -31,6 +33,28 @@ const Home = () => {
       icon: faCreditCard,
       title: "Payment Integration",
       desc: "Specialized in M-Pesa G2 and STK Push integrations for the Kenyan digital market."
+    }
+  ];
+
+  // Dynamic Portfolio Projects list
+  const featuredProjects = [
+    {
+      title: "SmartSave Fintech",
+      tags: ["React", "Node.js", "M-Pesa API"],
+      desc: "A high-performance micro-savings app featuring automated STK Push payment logic.",
+      image: "https://images.unsplash.com/photo-1563013544-824ae1d704d3?auto=format&fit=crop&q=80&w=600"
+    },
+    {
+      title: "ElectroMart E-Commerce",
+      tags: ["MongoDB", "Express", "Redux"],
+      desc: "A scalable digital marketplace optimized for lightning-fast product filtering and checkouts.",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600"
+    },
+    {
+      title: "Stemiot Fleet Tracker",
+      tags: ["IoT Hardware", "Websockets", "React"],
+      desc: "Real-time telemetry and mapping monitoring system handling concurrent stream data.",
+      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=600"
     }
   ];
 
@@ -73,6 +97,47 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* NEW: Portfolio Section */}
+      <section className="portfolio-featured">
+        <div className="container">
+          <div className="section-title">
+            <h2>Featured <span>Projects</span></h2>
+            <p>A handpicked gallery of our production-ready builds.</p>
+          </div>
+          
+          <div className="portfolio-grid">
+            {featuredProjects.map((project, index) => (
+              <div key={index} className="portfolio-card">
+                <div className="portfolio-img-wrapper">
+                  <img src={project.image} alt={project.title} />
+                  <div className="portfolio-overlay">
+                    <Link to="/portfolio" className="overlay-icon">
+                      <FontAwesomeIcon icon={faExternalLinkAlt} />
+                    </Link>
+                  </div>
+                </div>
+                <div className="portfolio-content">
+                  <div className="portfolio-tags">
+                    {project.tags.map((tag, tIndex) => (
+                      <span key={tIndex} className="tag">{tag}</span>
+                    ))}
+                  </div>
+                  <h3>{project.title}</h3>
+                  <p>{project.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="view-more-container">
+            <Link to="/portfolio" className="btn-view-more">
+              Explore Entire Portfolio <FontAwesomeIcon icon={faArrowRight} />
+            </Link>
+          </div>
+        </div>
+      </section>
+      
       <Footer />
     </div>
   );

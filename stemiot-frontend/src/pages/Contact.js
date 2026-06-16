@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faPhone, faMapMarkerAlt, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import './Contact.css';
 
 const Contact = () => {
@@ -21,7 +22,6 @@ const Contact = () => {
     e.preventDefault();
     console.log("Form Data Sent:", formData);
     setSubmitted(true);
-    // Reset form after 3 seconds
     setTimeout(() => setSubmitted(false), 3000);
   };
 
@@ -35,20 +35,35 @@ const Contact = () => {
       <div className="contact-wrapper">
         {/* Contact Information */}
         <div className="contact-info">
+          
           <div className="info-item">
             <div className="info-icon"><FontAwesomeIcon icon={faEnvelope} /></div>
             <div>
               <h4>Email Us</h4>
-              <p>info@stemiot.com</p>
+              <p>info@stemiotsoftwares.com</p>
             </div>
           </div>
+
           <div className="info-item">
             <div className="info-icon"><FontAwesomeIcon icon={faPhone} /></div>
             <div>
               <h4>Call Us</h4>
-              <p>+254 700 000 000</p>
+              <p>+254 115 598 800</p>
             </div>
           </div>
+
+          <div 
+            className="info-item whatsapp-link" 
+            onClick={() => window.open('https://wa.me/254115598800', '_blank')}
+            style={{ cursor: 'pointer' }}
+          >
+            <div className="info-icon"><FontAwesomeIcon icon={faWhatsapp} /></div>
+            <div>
+              <h4>WhatsApp</h4>
+              <p>+254 115 598 800</p>
+            </div>
+          </div>
+
           <div className="info-item">
             <div className="info-icon"><FontAwesomeIcon icon={faMapMarkerAlt} /></div>
             <div>
@@ -56,6 +71,7 @@ const Contact = () => {
               <p>Nairobi, Kenya</p>
             </div>
           </div>
+
         </div>
 
         {/* Contact Form */}
