@@ -19,12 +19,12 @@
 .logo-container {
   display: flex;
   align-items: center;
-  gap: 12px; /* Space between image and text */
+  gap: 12px; 
   text-decoration: none;
 }
 
 .nav-logo {
-  height: 60px; /* Slightly larger to match two lines of text */
+  height: 60px; 
   width: auto;
   display: block;
   transition: var(--transition);
@@ -39,7 +39,7 @@
 .logo-text {
   display: flex;
   flex-direction: column;
-  line-height: 1.1; /* Keeps the two lines close together */
+  line-height: 1.1; 
 }
 
 .brand-name {
@@ -53,7 +53,7 @@
 .brand-sub {
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--tech-blue); /* The "Softwares" part in blue */
+  color: var(--tech-blue); 
   text-transform: uppercase;
   letter-spacing: 2px;
 }
