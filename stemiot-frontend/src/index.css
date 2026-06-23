@@ -1,18 +1,31 @@
 :root {
-  /* Core Colors */
+  /* Constant Brand Colors across both modes */
   --tech-blue: #0A84FF;
   --electric-purple: #BF5AF2;
+  --white: #ffffff;
+
+  /* Default Dark Mode Mapping Setup */
   --dark-bg: #0F172A;
   --card-bg: #1E293B;
-  
-  /* Text & Accents */
   --text-main: #F8FAFC;
   --text-muted: #94A3B8;
-  --white: #ffffff;
+  --nav-bg: rgba(15, 23, 42, 0.95);
+  --footer-bg: #070B14;
+  --border-subtle: rgba(255, 255, 255, 0.05);
 
   /* Layout Constants */
   --transition: all 0.3s ease;
   --border-radius: 12px;
+}
+
+[data-theme="light"] {
+  --dark-bg: #F1F5F9;         
+  --card-bg: #FFFFFF;         
+  --text-main: #0F172A;       
+  --text-muted: #64748B;      
+  --nav-bg: rgba(241, 245, 249, 0.95);
+  --footer-bg: #E2E8F0;
+  --border-subtle: rgba(148, 163, 184, 0.15);
 }
 
 * {
@@ -27,10 +40,11 @@ body {
   color: var(--text-main);
   line-height: 1.6;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease; 
 }
 
-.container {
-  max-width: 1200px;
+.container { 
+  max-width: 1200px; 
   margin: 0 auto;
   padding: 0 2rem;
 }

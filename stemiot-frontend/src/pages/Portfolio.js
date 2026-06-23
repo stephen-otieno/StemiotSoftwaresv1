@@ -16,7 +16,6 @@ const Portfolio = () => {
         const response = await axios.get(`${API_BASE_URL}/projects`);
         console.log("Projects found:", response.data);
         
-        // ✅ Fixed: Reverse the array so the newest projects appear first
         const reverseChronological = [...response.data].reverse();
         setProjects(reverseChronological);
         
@@ -53,7 +52,7 @@ const Portfolio = () => {
         <div className="portfolio-grid">
           {projects.map((proj) => (
             <ProjectCard
-              key={proj._id} // Using MongoDB's unique ID
+              key={proj._id} 
               image={proj.image}
               name={proj.name}
               description={proj.description}

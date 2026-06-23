@@ -1,35 +1,37 @@
-
 import React from 'react';
-import Admin from './pages/Admin';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ThemeProvider } from './context/ThemeContext';
 
-// Components
-import Navbar from './components/Navbar';
+// Layout Global Components
+import Navbar from './components/Navbar'; 
+import Footer from './components/Footer';
 
-// Pages
+// Page Views
 import Home from './pages/Home';
 import Portfolio from './pages/Portfolio';
-import Blog from './pages/Blog';
-import Pricing from './pages/Pricing';
 import Contact from './pages/Contact';
-import Auth from './pages/Auth';
-
+import Admin from './pages/Admin';
+import Pricing from './pages/Pricing'; 
+import Blog from './pages/Blog';       
 function App() {
   return (
-    <Router>
-      <Navbar />
-      <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/portfolio" element={<Portfolio />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Auth />} />
-          <Route path="/admin" element={<Admin />} />
-        </Routes>
-      </main>
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <Navbar /> 
+        
+        <main style={{ minHeight: '80vh' }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/blog" element={<Blog />} />
+          </Routes>
+        </main>
+
+      </Router>
+    </ThemeProvider>
   );
 }
 

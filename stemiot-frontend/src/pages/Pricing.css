@@ -21,7 +21,7 @@
   display: flex;
   justify-content: center;
   gap: 2rem;
-  flex-wrap: wrap; /* Ensures responsiveness on mobile */
+  flex-wrap: wrap; 
 }
 
 .pricing-card {
