@@ -15,7 +15,7 @@ import './Home.css';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL;
 
-// ✅ FIXED: Moved outside the component so it never triggers useEffect dependency warnings
+// Declared globally outside the component
 const fallbackProjects = [
   {
     name: "SmartSave Fintech",
@@ -46,7 +46,6 @@ const Home = () => {
       title: "Web Development",
       desc: "Custom, responsive web applications built with the MERN stack for maximum performance."
     },
-    
     {
       icon: faMobileAlt,
       title: "Mobile Apps",
@@ -64,34 +63,11 @@ const Home = () => {
     }
   ];
 
-  // Backup mock dataset if the DB returns empty or errors out during local boot
-  const fallbackProjects = [
-    {
-      name: "SmartSave Fintech",
-      description: "A high-performance micro-savings app featuring automated STK Push payment logic.",
-      image: "https://images.unsplash.com/photo-1563013544-824ae1d704d3?auto=format&fit=crop&q=80&w=600",
-      link: "/portfolio"
-    },
-    {
-      name: "ElectroMart E-Commerce",
-      description: "A scalable digital marketplace optimized for lightning-fast product filtering and checkouts.",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600",
-      link: "/portfolio"
-    },
-    {
-      name: "Stemiot Fleet Tracker",
-      description: "Real-time telemetry and mapping monitoring system handling concurrent stream data.",
-      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=600",
-      link: "/portfolio"
-    }
-  ];
-
   useEffect(() => {
     const fetchLatestProjects = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/projects`);
         if (response.data && response.data.length > 0) {
-          // Reverse chronologically, then slice out only the top 3 items
           const newestThree = [...response.data].reverse().slice(0, 3);
           setFeaturedProjects(newestThree);
         } else {
@@ -104,7 +80,7 @@ const Home = () => {
     };
 
     fetchLatestProjects();
-  }, []);
+  }, []); // Empty array is completely safe here since fallbackProjects is an independent global static asset
 
   return (
     <div className="home-container">
@@ -167,7 +143,6 @@ const Home = () => {
                 </div>
                 <div className="portfolio-content">
                   <div className="portfolio-tags">
-                    {/* Maps dynamic tags if they exist, otherwise assigns a default core engineering label */}
                     {project.tags && project.tags.length > 0 ? (
                       project.tags.map((tag, tIndex) => (
                         <span key={tIndex} className="tag">{tag}</span>
