@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Footer from '../components/Footer';
 import { 
@@ -12,13 +13,40 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import './Home.css';
 
+const API_BASE_URL = process.env.REACT_APP_API_URL;
+
+// ✅ FIXED: Moved outside the component so it never triggers useEffect dependency warnings
+const fallbackProjects = [
+  {
+    name: "SmartSave Fintech",
+    description: "A high-performance micro-savings app featuring automated STK Push payment logic.",
+    image: "https://images.unsplash.com/photo-1563013544-824ae1d704d3?auto=format&fit=crop&q=80&w=600",
+    link: "/portfolio"
+  },
+  {
+    name: "ElectroMart E-Commerce",
+    description: "A scalable digital marketplace optimized for lightning-fast product filtering and checkouts.",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600",
+    link: "/portfolio"
+  },
+  {
+    name: "Stemiot Fleet Tracker",
+    description: "Real-time telemetry and mapping monitoring system handling concurrent stream data.",
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=600",
+    link: "/portfolio"
+  }
+];
+
 const Home = () => {
+  const [featuredProjects, setFeaturedProjects] = useState([]);
+  
   const services = [
     {
       icon: faCode,
       title: "Web Development",
       desc: "Custom, responsive web applications built with the MERN stack for maximum performance."
     },
+    
     {
       icon: faMobileAlt,
       title: "Mobile Apps",
@@ -36,27 +64,47 @@ const Home = () => {
     }
   ];
 
-  // Dynamic Portfolio Projects list
-  const featuredProjects = [
+  // Backup mock dataset if the DB returns empty or errors out during local boot
+  const fallbackProjects = [
     {
-      title: "SmartSave Fintech",
-      tags: ["React", "Node.js", "M-Pesa API"],
-      desc: "A high-performance micro-savings app featuring automated STK Push payment logic.",
-      image: "https://images.unsplash.com/photo-1563013544-824ae1d704d3?auto=format&fit=crop&q=80&w=600"
+      name: "SmartSave Fintech",
+      description: "A high-performance micro-savings app featuring automated STK Push payment logic.",
+      image: "https://images.unsplash.com/photo-1563013544-824ae1d704d3?auto=format&fit=crop&q=80&w=600",
+      link: "/portfolio"
     },
     {
-      title: "ElectroMart E-Commerce",
-      tags: ["MongoDB", "Express", "Redux"],
-      desc: "A scalable digital marketplace optimized for lightning-fast product filtering and checkouts.",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600"
+      name: "ElectroMart E-Commerce",
+      description: "A scalable digital marketplace optimized for lightning-fast product filtering and checkouts.",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600",
+      link: "/portfolio"
     },
     {
-      title: "Stemiot Fleet Tracker",
-      tags: ["IoT Hardware", "Websockets", "React"],
-      desc: "Real-time telemetry and mapping monitoring system handling concurrent stream data.",
-      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=600"
+      name: "Stemiot Fleet Tracker",
+      description: "Real-time telemetry and mapping monitoring system handling concurrent stream data.",
+      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=600",
+      link: "/portfolio"
     }
   ];
+
+  useEffect(() => {
+    const fetchLatestProjects = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/projects`);
+        if (response.data && response.data.length > 0) {
+          // Reverse chronologically, then slice out only the top 3 items
+          const newestThree = [...response.data].reverse().slice(0, 3);
+          setFeaturedProjects(newestThree);
+        } else {
+          setFeaturedProjects(fallbackProjects);
+        }
+      } catch (error) {
+        console.error("Error fetching homepage featured projects:", error);
+        setFeaturedProjects(fallbackProjects);
+      }
+    };
+
+    fetchLatestProjects();
+  }, []);
 
   return (
     <div className="home-container">
@@ -98,7 +146,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* NEW: Portfolio Section */}
+      {/* Portfolio Section */}
       <section className="portfolio-featured">
         <div className="container">
           <div className="section-title">
@@ -108,23 +156,28 @@ const Home = () => {
           
           <div className="portfolio-grid">
             {featuredProjects.map((project, index) => (
-              <div key={index} className="portfolio-card">
+              <div key={project._id || index} className="portfolio-card">
                 <div className="portfolio-img-wrapper">
-                  <img src={project.image} alt={project.title} />
+                  <img src={project.image} alt={project.name} />
                   <div className="portfolio-overlay">
-                    <Link to="/portfolio" className="overlay-icon">
+                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="overlay-icon">
                       <FontAwesomeIcon icon={faExternalLinkAlt} />
-                    </Link>
+                    </a>
                   </div>
                 </div>
                 <div className="portfolio-content">
                   <div className="portfolio-tags">
-                    {project.tags.map((tag, tIndex) => (
-                      <span key={tIndex} className="tag">{tag}</span>
-                    ))}
+                    {/* Maps dynamic tags if they exist, otherwise assigns a default core engineering label */}
+                    {project.tags && project.tags.length > 0 ? (
+                      project.tags.map((tag, tIndex) => (
+                        <span key={tIndex} className="tag">{tag}</span>
+                      ))
+                    ) : (
+                      <span className="tag">Production Build</span>
+                    )}
                   </div>
-                  <h3>{project.title}</h3>
-                  <p>{project.desc}</p>
+                  <h3>{project.name}</h3>
+                  <p>{project.description}</p>
                 </div>
               </div>
             ))}

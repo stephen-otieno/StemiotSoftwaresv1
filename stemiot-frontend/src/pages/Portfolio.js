@@ -4,6 +4,7 @@ import ProjectCard from '../components/ProjectCard';
 import './Portfolio.css';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL;
+
 const Portfolio = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,7 +15,11 @@ const Portfolio = () => {
         // Use the dynamic URL from .env
         const response = await axios.get(`${API_BASE_URL}/projects`);
         console.log("Projects found:", response.data);
-        setProjects(response.data);
+        
+        // ✅ Fixed: Reverse the array so the newest projects appear first
+        const reverseChronological = [...response.data].reverse();
+        setProjects(reverseChronological);
+        
         setLoading(false);
       } catch (error) {
         console.error("Error fetching projects:", error);
@@ -42,7 +47,7 @@ const Portfolio = () => {
 
       {projects.length === 0 ? (
         <div style={{ textAlign: 'center', color: 'var(--text-muted)' }}>
-          <p>No projects found. Use the seeder to populate the portfolio.</p>
+          <p>No projects found. Use the dashboard to populate the portfolio.</p>
         </div>
       ) : (
         <div className="portfolio-grid">
